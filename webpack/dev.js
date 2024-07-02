@@ -54,7 +54,7 @@ const devConfig = configBuilder(
         "Access-Control-Allow-Methods": "*",
         "Access-Control-Allow-Headers": "*",
       },
-      port: 3200,
+      port: 3380,
       host: "0.0.0.0",
       hot: true,
       static: {
@@ -102,7 +102,7 @@ const devConfig = configBuilder(
     plugins: [
       isDevelopment && new ReactRefreshWebpackPlugin({ library: "[name]" }),
       new HtmlWebpackPlugin({
-        template: path.join(projectBasePath, "dev-helpers", "index.html"),
+        template: path.join(projectBasePath, "dev-helpers", "index.html",),
       }),
       new HtmlWebpackSkipAssetsPlugin({
         skipAssets: [/swagger-ui\.js/],

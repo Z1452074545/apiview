@@ -43,12 +43,32 @@ $color-danger: #f00 !default;
 
 $color-primary-hover: lighten($color-primary, .5%) !default;
 
-$_color-post: #49cc90 !default;
-$_color-get: #61affe !default;
-$_color-put: #fca130 !default;
-$_color-delete: #f93e3e !default;
+
+//注释原有的背景色
+// $_color-post: #49cc90 !default;
+// $_color-get: #61affe !default;
+// $_color-put: #fca130 !default;
+// $_color-delete: #f93e3e !default;
+// $_color-head: #9012fe !default;
+// $_color-patch: #50e3c2 !default;
+// $_color-disabled: #ebebeb !default;
+// $_color-options: #0d5aa7 !default;
+
+//增加字体颜色
+$_color-post-font: #49cc90 !default;
+$_color-get-font: #61affe !default;
+$_color-put-font: #fca130 !default;
+$_color-delete-font: #f93e3e !default;
+$_color-patch-font: #50e3c2 !default;
+
+
+//重置背景色
+$_color-post: #49cc901a !default;
+$_color-get: #61affe1a !default;
+$_color-put: #fca1301a !default;
+$_color-delete: #f93e3e1a !default;
 $_color-head: #9012fe !default;
-$_color-patch: #50e3c2 !default;
+$_color-patch: #86f2db1a !default;
 $_color-disabled: #ebebeb !default;
 $_color-options: #0d5aa7 !default;
 

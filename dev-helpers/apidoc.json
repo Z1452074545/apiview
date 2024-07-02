@@ -1,0 +1,4097 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "词典笔小程序后端API接口文档",
+        "title": "Dictionary Pen API Server",
+        "contact": {},
+        "version": "1.0"
+    },
+    "basePath": "/api/v1",
+    "paths": {
+        "/alarms": {
+            "get": {
+                "description": "查看当前设备的闹钟",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Alarms"
+                ],
+                "summary": "ListAlarms",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ScheduleDataType"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "创建闹钟",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Alarms"
+                ],
+                "summary": "CreateAlarm",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "`alarm info`",
+                        "name": "CreateAlarmReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateAlarmReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Alarm"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/alarms/{id}": {
+            "get": {
+                "description": "查看指定闹钟详情",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Alarms"
+                ],
+                "summary": "GetAlarm",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "`alarm id`",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Alarm"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "更新指定闹钟",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Alarms"
+                ],
+                "summary": "UpdateAlarm",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "`alarm id`",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "`alarm info`",
+                        "name": "UpdateAlarmReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateAlarmReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Alarm"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "删除指定闹钟",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Alarms"
+                ],
+                "summary": "DeleteAlarm",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "`alarm id`",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/me": {
+            "get": {
+                "description": "获取当前用户信息",
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "GetUserInfo",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "更新当前用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "UpdateUserInfo",
+                "parameters": [
+                    {
+                        "description": "UpdateMeReq",
+                        "name": "UpdateMeReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateMeReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/contacts": {
+            "get": {
+                "description": "获取联系人列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Contacts"
+                ],
+                "summary": "ListContacts",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "联系人姓名/号码(模糊搜索)",
+                        "name": "name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/controller.ListContactsRes"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "添加联系人",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Contacts"
+                ],
+                "summary": "CreateContact",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "CreateContactReq",
+                        "name": "CreateContactReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateContactReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Contact"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/contacts/{id}": {
+            "get": {
+                "description": "获取联系人详情",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Contacts"
+                ],
+                "summary": "GetContact",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "联系人ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Contact"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "更新联系人",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Contacts"
+                ],
+                "summary": "UpdateContact",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "联系人ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "更新联系人",
+                        "name": "UpdateContactReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateContactReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Contact"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "删除联系人",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Contacts"
+                ],
+                "summary": "DelContacts",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/devices": {
+            "get": {
+                "description": "获取当前用户绑定的设备列表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "ListDeviceInfo",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Device"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/devices/bind": {
+            "post": {
+                "description": "绑定设备到当前用户",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "BindDevice",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Bind Device Req",
+                        "name": "BindDeviceReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.BindDeviceReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Device"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/devices/call_forward": {
+            "get": {
+                "description": "查看当前设备的呼叫转移设置",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-CallForward"
+                ],
+                "summary": "GetCallForward",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateCallForwardReq"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "更新当前设备的呼叫转移设置",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-CallForward"
+                ],
+                "summary": "UpdateCallForward",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "配置项",
+                        "name": "UpdateCallForwardReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateCallForwardReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateCallForwardReq"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/devices/lost": {
+            "post": {
+                "description": "设置设备为丢失模式",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "LostDevice",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Lost Device Req",
+                        "name": "LostDeviceReq",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/controller.LostDeviceReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Device"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/devices/unbind": {
+            "post": {
+                "description": "解绑设备",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "UnBindDevice",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/devices/unlost": {
+            "post": {
+                "description": "取消设备的丢失模式",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "UnLostDevice",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Device"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/devices/{imei}": {
+            "get": {
+                "description": "根据设备15位 `IEMI` 或19位绑定码来获取设备的详细信息",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "GetDeviceInfo",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`imei`",
+                        "name": "imei",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Device"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "根据设备 `IEMI` 获取设备的详细信息",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "UpdateDeviceInfo",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`imei`",
+                        "name": "imei",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update Device Req",
+                        "name": "UpdateDeviceRep",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateDeviceReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Device"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/dict/query": {
+            "post": {
+                "description": "Query `English word` or `Chinese character`",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools"
+                ],
+                "summary": "Query word",
+                "parameters": [
+                    {
+                        "description": "Query word request",
+                        "name": "WordQueryReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.WordQueryReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.DictionaryEntry"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/excerpts": {
+            "get": {
+                "description": "阅读摘抄",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Excerpt"
+                ],
+                "summary": "ListExcerpts",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "CHN",
+                            "ENG"
+                        ],
+                        "type": "string",
+                        "description": "语言类型",
+                        "name": "lang_type",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "group"
+                        ],
+                        "type": "string",
+                        "description": "返回格式",
+                        "name": "format",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "7天前",
+                        "description": "开始时间",
+                        "name": "start_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "当前时间",
+                        "description": "结束时间",
+                        "name": "end_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 100,
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ListExcerptsRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/excerpts/book": {
+            "get": {
+                "description": "生成小抄本pdf",
+                "tags": [
+                    "Tools-Excerpt"
+                ],
+                "summary": "ExcerptBook",
+                "responses": {}
+            },
+            "post": {
+                "description": "生成小抄本并上传移动云盘",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Excerpt"
+                ],
+                "summary": "GenExcerptBook",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/excerpts/{id}": {
+            "put": {
+                "description": "更新小抄",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Excerpt"
+                ],
+                "summary": "UpdateExcerpt",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "小抄ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "更新小抄",
+                        "name": "UpdateExcerptReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateExcerptReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Excerpt"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/histories": {
+            "get": {
+                "description": "查询历史",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Histories"
+                ],
+                "summary": "ListHistories",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "查询单词",
+                        "name": "word",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "CHN",
+                            "ENG"
+                        ],
+                        "type": "string",
+                        "description": "语言类型",
+                        "name": "lang_type",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 100,
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ListHistoriesRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/map/regeo": {
+            "post": {
+                "description": "根据经纬度获取地理位置信息, 以及计算两点之间的距离",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools"
+                ],
+                "summary": "MapReGeo",
+                "parameters": [
+                    {
+                        "description": "MapReGeoReq",
+                        "name": "MapReGeoReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.MapReGeoReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.MapReGeoRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/memory_curve": {
+            "get": {
+                "description": "获取记忆曲线数据",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-MemoryCurve"
+                ],
+                "summary": "MemoryCurve",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "CHN",
+                            "ENG"
+                        ],
+                        "type": "string",
+                        "description": "语言类型",
+                        "name": "lang_type",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            -1,
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            6,
+                            7
+                        ],
+                        "type": "integer",
+                        "description": "时间范围",
+                        "name": "time_rang_index",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.MemoryCurveRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/memory_curve/next": {
+            "get": {
+                "description": "根据ID获取下一个记忆曲线单词",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-MemoryCurve"
+                ],
+                "summary": "NextMemoryCurveItem",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "单词ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "CHN",
+                            "ENG"
+                        ],
+                        "type": "string",
+                        "description": "语言类型",
+                        "name": "lang_type",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            -1,
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            6,
+                            7
+                        ],
+                        "type": "integer",
+                        "description": "时间范围",
+                        "name": "time_rang_index",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.memory"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/memory_curve/{id}": {
+            "get": {
+                "description": "获取记忆曲线单词详情",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-MemoryCurve"
+                ],
+                "summary": "MemoryCurveDetail",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "单词ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.MemoryCurveDetailRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "更新记忆曲线数据(今日完成学习)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-MemoryCurve"
+                ],
+                "summary": "UpdateMemoryCurve",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "单词ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/mng/dashboard": {
+            "get": {
+                "description": "管理后台首页",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Dashboard",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/manager.DashboardRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/mng/devices": {
+            "get": {
+                "description": "获取设备列表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "ListDevice",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "设备序列号(模糊匹配)",
+                        "name": "imei",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "设备mac地址(模糊匹配)",
+                        "name": "mac",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "设备名称(模糊匹配)",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 100,
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/manager.ListDevicesRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "创建设备",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "CreateDevice",
+                "parameters": [
+                    {
+                        "description": "New Device Req",
+                        "name": "NewDeviceReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/manager.NewDeviceReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Device"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/mng/devices/batch": {
+            "post": {
+                "description": "从Excel批量创建设备",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "BatchCreateDeviceFromExcel",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "name": "dry_run",
+                        "in": "query"
+                    },
+                    {
+                        "type": "file",
+                        "description": "Excel File",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/mng/devices/{imei}": {
+            "get": {
+                "description": "获取设备详细信息",
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "GetDevice",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device.imei`",
+                        "name": "imei",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Device"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "修改设备信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "UpdateDevice",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device.imei`",
+                        "name": "imei",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update Device Req",
+                        "name": "UpdateDeviceReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/manager.UpdateDeviceReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/model.Device"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "删除设备",
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "DeleteDevice",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device.imei`",
+                        "name": "imei",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/mng/districts": {
+            "get": {
+                "description": "行政区划列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Districts",
+                "responses": {
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/mng/login": {
+            "post": {
+                "description": "Admin Login",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "AdminLogin",
+                "parameters": [
+                    {
+                        "description": "username and password",
+                        "name": "AdminLoginReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/manager.AdminLoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/manager.LoginResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/mng/schedules": {
+            "get": {
+                "description": "课时表列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "ListSchedules",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "课时表名称(模糊匹配)",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "课时表适用区域(模糊匹配)",
+                        "name": "region",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 100,
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/manager.ListSchedulesRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "创建课时表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "CreateSchedule",
+                "parameters": [
+                    {
+                        "description": "CreateScheduleReq",
+                        "name": "CreateScheduleReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/manager.CreateScheduleReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Schedule"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/mng/schedules/{id}": {
+            "get": {
+                "description": "获取课时表详情",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "GetSchedule",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "schedule id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Schedule"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "修改课时表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "UpdateSchedule",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "schedule id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "UpdateScheduleReq",
+                        "name": "UpdateScheduleReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/manager.UpdateScheduleReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/model.Schedule"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "删除课时表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "DeleteSchedule",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "schedule id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/reports": {
+            "get": {
+                "description": "学习报告页面",
+                "tags": [
+                    "Reports"
+                ],
+                "summary": "ReportPage",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/reports/book": {
+            "get": {
+                "description": "生成学习报告pdf",
+                "tags": [
+                    "Reports"
+                ],
+                "summary": "ReportBook",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "生成学习报告并上传云盘",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Vocabularies"
+                ],
+                "summary": "GenReportBook",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/schedules": {
+            "get": {
+                "description": "查看当前用户的课时表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Schedules"
+                ],
+                "summary": "ListSchedules",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ScheduleDataType"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "创建课时表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Schedules"
+                ],
+                "summary": "CreateSchedules",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "imei",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "CreateScheduleReq",
+                        "name": "CreateScheduleReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CreateScheduleReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Schedule"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/schedules/shared/{id}": {
+            "get": {
+                "description": "获取用户分享的课时表详情",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Schedules"
+                ],
+                "summary": "GetSharedSchedules",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "`schedule id`",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Schedule"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/schedules/{id}": {
+            "get": {
+                "description": "查看指定课时表详情",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Schedules"
+                ],
+                "summary": "GetSchedules",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "imei",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "`schedule id`",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Schedule"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "修改课时表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Schedules"
+                ],
+                "summary": "UpdateSchedules",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "`schedule id`",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "UpdateScheduleReq",
+                        "name": "UpdateScheduleReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UpdateScheduleReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Schedule"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "创建课时表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Schedules"
+                ],
+                "summary": "DeleteSchedules",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "`schedule id`",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/sms": {
+            "get": {
+                "description": "远程短信",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-SMS"
+                ],
+                "summary": "ListSMS",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "1月前",
+                        "description": "开始时间",
+                        "name": "start_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "当前时间",
+                        "description": "结束时间",
+                        "name": "end_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 20,
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ListSMSRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/upload": {
+            "post": {
+                "description": "上传文件",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools"
+                ],
+                "summary": "UploadFile",
+                "parameters": [
+                    {
+                        "description": "UploadFileReq",
+                        "name": "UploadFileReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.UploadFileReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.UploadFileRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/vocabularies": {
+            "get": {
+                "description": "ListVocabularies",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Vocabularies"
+                ],
+                "summary": "ListVocabularies",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "CHN",
+                            "ENG"
+                        ],
+                        "type": "string",
+                        "description": "语言类型",
+                        "name": "lang_type",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "group"
+                        ],
+                        "type": "string",
+                        "description": "数据格式",
+                        "name": "format",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            1,
+                            2,
+                            3,
+                            4
+                        ],
+                        "type": "integer",
+                        "description": "时间范围",
+                        "name": "time_range",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "7天前",
+                        "description": "开始时间",
+                        "name": "start_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "当前时间",
+                        "description": "结束时间",
+                        "name": "end_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 100,
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ListVocabulariesRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/vocabularies/book": {
+            "get": {
+                "description": "生词本pdf",
+                "tags": [
+                    "Tools-Vocabularies"
+                ],
+                "summary": "VocabularyBook",
+                "responses": {}
+            },
+            "post": {
+                "description": "生成生词本并上传移动云盘",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Vocabularies"
+                ],
+                "summary": "GenVocabularyBook",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "请求参数",
+                        "name": "GenVocabularyBookReq",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/controller.GenVocabularyBookReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/vocabularies/next": {
+            "get": {
+                "description": "根据`id`获取下一个生词",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Vocabularies"
+                ],
+                "summary": "GetNextVocabulary",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "生词ID",
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Vocabulary"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/vocabularies/{id}": {
+            "delete": {
+                "description": "删除生词",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Vocabularies"
+                ],
+                "summary": "DeleteVocabulary",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "生词ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/vocabularies/{id}/info": {
+            "get": {
+                "description": "查询生词信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tools-Vocabularies"
+                ],
+                "summary": "GetVocabulary",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "生词ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/wx/login": {
+            "post": {
+                "description": "WeChat MiniProgram Login",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WeChat"
+                ],
+                "summary": "WechatLogin",
+                "parameters": [
+                    {
+                        "description": "WeChat Code",
+                        "name": "WXLoginReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.WXLoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.LoginResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/wx/mobile": {
+            "post": {
+                "description": "获取微信小程序用户手机号",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WeChat"
+                ],
+                "summary": "WechatMobile",
+                "parameters": [
+                    {
+                        "description": "WeChat Code",
+                        "name": "WXMobileReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.WXLoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/wx/pay": {
+            "post": {
+                "description": "WeChatPay",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WeChat"
+                ],
+                "summary": "WechatPay",
+                "parameters": [
+                    {
+                        "description": "WeChat Pay Req",
+                        "name": "WXPayReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.WXPayReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/wx/pay_notify": {
+            "post": {
+                "description": "WeChatPay Notify Callback",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WeChat"
+                ],
+                "summary": "WechatPayNotify",
+                "responses": {}
+            }
+        },
+        "/yidong/auth/status": {
+            "patch": {
+                "description": "开启/关闭移动云盘授权认证功能",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Yun-YiDong"
+                ],
+                "summary": "UpdateYidongEnableStatus",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`enable or disable`",
+                        "name": "status",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/yidong/callback": {
+            "get": {
+                "description": "中国移动云盘认证后回调接口",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Yun-YiDong"
+                ],
+                "summary": "YidongCallback",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`uuid`",
+                        "name": "uuid",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "imei",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/yidong/login": {
+            "get": {
+                "description": "中国移动云盘认证页面",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Yun-YiDong"
+                ],
+                "summary": "YidongLogin",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/yidong.YidongLoginRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/yidong/upload": {
+            "post": {
+                "description": "中国移动云盘文件上传接口",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Yun-YiDong"
+                ],
+                "summary": "YidongUpload",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "`device imei`",
+                        "name": "X-IMEI",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.baseErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controller.BindDeviceReq": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "Mac     string `json:\"mac\"     binding:\"mac\"`\n绑定码",
+                    "type": "string"
+                },
+                "imei": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.CreateAlarmReq": {
+            "type": "object",
+            "required": [
+                "time"
+            ],
+            "properties": {
+                "enable": {
+                    "type": "boolean"
+                },
+                "remark": {
+                    "type": "string"
+                },
+                "repeat": {
+                    "$ref": "#/definitions/model.RepeatType"
+                },
+                "time": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.CreateContactReq": {
+            "type": "object",
+            "required": [
+                "phone_number"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "is_family": {
+                                "type": "boolean"
+                            },
+                            "number": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "controller.CreateScheduleReq": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "enable": {
+                    "description": "default: fasle",
+                    "type": "boolean"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ScheduleItem"
+                    }
+                },
+                "mute_on_holiday": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.GenVocabularyBookReq": {
+            "type": "object"
+        },
+        "controller.History": {
+            "type": "object",
+            "properties": {
+                "explanations": {
+                    "type": "string"
+                },
+                "lang_type": {
+                    "type": "string"
+                },
+                "pronunciation": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "time": {
+                    "type": "string"
+                },
+                "word": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.ListContactsRes": {
+            "type": "object",
+            "properties": {
+                "contacts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Contact"
+                    }
+                },
+                "letter": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.ListExcerptsRes": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Excerpt"
+                    }
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "controller.ListHistoriesRes": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "description": "日期 =\u003e 语言类型 =\u003e 单词列表",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/controller.History"
+                            }
+                        }
+                    }
+                },
+                "date_list": {
+                    "description": "日期列表，降序",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "controller.ListSMSRes": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SMS"
+                    }
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "controller.ListVocabulariesRes": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Vocabulary"
+                    }
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "controller.LoginResponse": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpX..."
+                },
+                "refresh_token": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpX..."
+                }
+            }
+        },
+        "controller.LostDeviceReq": {
+            "type": "object",
+            "properties": {
+                "lost_message": {
+                    "type": "string"
+                },
+                "lost_phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.MapReGeoReq": {
+            "type": "object",
+            "required": [
+                "cur_location",
+                "pen_location"
+            ],
+            "properties": {
+                "cur_location": {
+                    "type": "string",
+                    "example": "116.481488,39.990464"
+                },
+                "pen_location": {
+                    "type": "string",
+                    "example": "116.481488,39.990464"
+                }
+            }
+        },
+        "controller.MapReGeoRes": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "distance": {
+                    "type": "number",
+                    "x-unit": "m"
+                }
+            }
+        },
+        "controller.MemoryCurveDetailRes": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "detail": {
+                    "description": "单词详情(词典返回结果)"
+                },
+                "finished": {
+                    "description": "是否完成学习(对应记忆曲线中每个时间段)",
+                    "type": "array",
+                    "items": {
+                        "type": "boolean"
+                    }
+                },
+                "finished_at": {
+                    "description": "完成学习时间原始记录",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.FinishedType"
+                        }
+                    ]
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lang_type": {
+                    "type": "string"
+                },
+                "word": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.MemoryCurveRes": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/controller.memory"
+                        }
+                    }
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "controller.ScheduleDataType": {
+            "type": "object",
+            "properties": {
+                "private": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Schedule"
+                    }
+                },
+                "shared": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Schedule"
+                    }
+                }
+            }
+        },
+        "controller.UpdateAlarmReq": {
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "type": "boolean"
+                },
+                "remark": {
+                    "type": "string"
+                },
+                "repeat": {
+                    "$ref": "#/definitions/model.RepeatType"
+                },
+                "time": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.UpdateCallForwardReq": {
+            "type": "object",
+            "required": [
+                "cf_number",
+                "cf_type"
+            ],
+            "properties": {
+                "cf_number": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "cf_type": {
+                    "type": "string",
+                    "enum": [
+                        "0",
+                        "1",
+                        "2",
+                        "3",
+                        "4"
+                    ]
+                }
+            }
+        },
+        "controller.UpdateContactReq": {
+            "type": "object",
+            "properties": {
+                "avatar_url": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "is_family": {
+                                "type": "boolean"
+                            },
+                            "number": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "controller.UpdateDeviceReq": {
+            "type": "object",
+            "properties": {
+                "current_schedule_id": {
+                    "description": "课时表",
+                    "type": "integer"
+                },
+                "enable_alarm": {
+                    "description": "闹钟提醒",
+                    "type": "boolean"
+                },
+                "enable_location": {
+                    "description": "定位查找",
+                    "type": "boolean"
+                },
+                "enable_mute": {
+                    "description": "上课静音",
+                    "type": "boolean"
+                },
+                "enable_sms": {
+                    "description": "远程短信",
+                    "type": "boolean"
+                },
+                "enable_white_list": {
+                    "description": "通讯录白名单",
+                    "type": "boolean"
+                },
+                "mute_in_class": {
+                    "description": "上课静音",
+                    "type": "boolean"
+                },
+                "name": {
+                    "description": "设备名称",
+                    "type": "string"
+                }
+            }
+        },
+        "controller.UpdateExcerptReq": {
+            "type": "object",
+            "properties": {
+                "like": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "controller.UpdateMeReq": {
+            "type": "object",
+            "properties": {
+                "avatar_url": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.UpdateScheduleReq": {
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "type": "boolean"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ScheduleItem"
+                    }
+                },
+                "mute_on_holiday": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.UploadFileReq": {
+            "type": "object",
+            "required": [
+                "file"
+            ],
+            "properties": {
+                "file": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.UploadFileRes": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.WXLoginReq": {
+            "type": "object",
+            "required": [
+                "code"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "example": "0d23790w3oDnZ035k60w3biOMm03790g"
+                }
+            }
+        },
+        "controller.WXPayReq": {
+            "type": "object"
+        },
+        "controller.WordQueryReq": {
+            "type": "object",
+            "required": [
+                "lang_type",
+                "word"
+            ],
+            "properties": {
+                "lang_type": {
+                    "description": "中文:CHN,英文:ENG",
+                    "type": "string",
+                    "enum": [
+                        "CHN",
+                        "ENG"
+                    ]
+                },
+                "word": {
+                    "type": "string"
+                }
+            }
+        },
+        "controller.memory": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "lang_type": {
+                    "type": "string"
+                },
+                "word": {
+                    "type": "string"
+                }
+            }
+        },
+        "manager.AdminLoginReq": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "manager.CreateScheduleReq": {
+            "type": "object",
+            "required": [
+                "name",
+                "region"
+            ],
+            "properties": {
+                "enable": {
+                    "type": "boolean"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ScheduleItem"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "manager.DashboardRes": {
+            "type": "object"
+        },
+        "manager.ListDevicesRes": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Device"
+                    }
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "manager.ListSchedulesRes": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Schedule"
+                    }
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "manager.LoginResponse": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "refresh_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "manager.NewDeviceReq": {
+            "type": "object",
+            "required": [
+                "imei",
+                "mac"
+            ],
+            "properties": {
+                "imei": {
+                    "type": "string"
+                },
+                "mac": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "manager.UpdateDeviceReq": {
+            "type": "object",
+            "properties": {
+                "model": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "manager.UpdateScheduleReq": {
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "description": "default: fasle",
+                    "type": "boolean"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ScheduleItem"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "middleware.baseErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Alarm": {
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "remark": {
+                    "type": "string"
+                },
+                "repeat": {
+                    "$ref": "#/definitions/model.RepeatType"
+                },
+                "time": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.CFNumber": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "model.Contact": {
+            "type": "object",
+            "properties": {
+                "avatar_url": {
+                    "type": "string"
+                },
+                "device_imei": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "letter": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "is_family": {
+                                "type": "boolean"
+                            },
+                            "number": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "model.Device": {
+            "type": "object",
+            "properties": {
+                "alarms": {
+                    "description": "闹钟",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Alarm"
+                    }
+                },
+                "battery_quantity": {
+                    "description": "电池电量",
+                    "type": "integer"
+                },
+                "battery_state": {
+                    "description": "充电状态",
+                    "type": "string"
+                },
+                "cf_number": {
+                    "$ref": "#/definitions/model.CFNumber"
+                },
+                "cf_type": {
+                    "description": "来电转接",
+                    "type": "string"
+                },
+                "config": {
+                    "description": "FunctionConfig",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.FunctionConfig"
+                        }
+                    ]
+                },
+                "contacts": {
+                    "description": "联系方式",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Contact"
+                    }
+                },
+                "current_schedule_id": {
+                    "description": "当前课时表",
+                    "type": "integer"
+                },
+                "excerpts": {
+                    "description": "摘抄",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Excerpt"
+                    }
+                },
+                "firmware_version": {
+                    "description": "固件版本",
+                    "type": "string"
+                },
+                "hardware_version": {
+                    "description": "硬件版本",
+                    "type": "string"
+                },
+                "image": {
+                    "description": "设备图片",
+                    "type": "string"
+                },
+                "imei": {
+                    "description": "设备ID，设备序列号",
+                    "type": "string"
+                },
+                "is_lost": {
+                    "description": "丢失模式",
+                    "type": "boolean"
+                },
+                "last_location_at": {
+                    "type": "string"
+                },
+                "location": {
+                    "description": "最后一次定位",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.Location"
+                        }
+                    ]
+                },
+                "lost_message": {
+                    "description": "丢失模式提示信息",
+                    "type": "string"
+                },
+                "lost_phone": {
+                    "description": "丢失模式联系电话",
+                    "type": "string"
+                },
+                "mac": {
+                    "description": "Mac地址",
+                    "type": "string"
+                },
+                "merchant": {
+                    "description": "渠道商",
+                    "type": "string"
+                },
+                "model": {
+                    "description": "型号",
+                    "type": "string"
+                },
+                "mute_in_class": {
+                    "description": "上课静音",
+                    "type": "boolean"
+                },
+                "name": {
+                    "description": "设备名称",
+                    "type": "string"
+                },
+                "schedules": {
+                    "description": "课时表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Schedule"
+                    }
+                },
+                "sms": {
+                    "description": "短信",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SMS"
+                    }
+                },
+                "users": {
+                    "description": "User",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.User"
+                    }
+                },
+                "version": {
+                    "description": "版本",
+                    "type": "string"
+                },
+                "vocabularys": {
+                    "description": "单词本",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Vocabulary"
+                    }
+                }
+            }
+        },
+        "model.Excerpt": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "explanation": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lang_type": {
+                    "type": "string"
+                },
+                "like": {
+                    "type": "boolean"
+                },
+                "sentence": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.FinishedType": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "boolean"
+            }
+        },
+        "model.FunctionConfig": {
+            "type": "object",
+            "properties": {
+                "alarm": {
+                    "description": "闹钟提醒",
+                    "type": "boolean"
+                },
+                "enable_white_list": {
+                    "description": "通讯录白名单",
+                    "type": "boolean"
+                },
+                "location": {
+                    "description": "定位查找",
+                    "type": "boolean"
+                },
+                "mute": {
+                    "description": "上课静音",
+                    "type": "boolean"
+                },
+                "sms": {
+                    "description": "远程短信",
+                    "type": "boolean"
+                }
+            }
+        },
+        "model.Location": {
+            "type": "object",
+            "properties": {
+                "lat": {
+                    "type": "number"
+                },
+                "lon": {
+                    "type": "number"
+                }
+            }
+        },
+        "model.RepeatType": {
+            "type": "string",
+            "enum": [
+                "once",
+                "everyday",
+                "workday",
+                "holiday",
+                "weekday",
+                "1,2,3,4,5,6,7"
+            ],
+            "x-enum-comments": {
+                "AlarmRepeat_Custom": "自定义(如: 1,2,3,7)",
+                "AlarmRepeat_Everyday": "每天",
+                "AlarmRepeat_Holiday": "法定节假日",
+                "AlarmRepeat_Once": "一次",
+                "AlarmRepeat_Weekday": "周一至周五",
+                "AlarmRepeat_WorkDay": "法定工作日"
+            },
+            "x-enum-varnames": [
+                "AlarmRepeat_Once",
+                "AlarmRepeat_Everyday",
+                "AlarmRepeat_WorkDay",
+                "AlarmRepeat_Holiday",
+                "AlarmRepeat_Weekday",
+                "AlarmRepeat_Custom"
+            ]
+        },
+        "model.SMS": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "sender": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Schedule": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "enable": {
+                    "description": "是否启用(在后台管理系统中控制)",
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ScheduleItem"
+                    }
+                },
+                "mute_on_holiday": {
+                    "description": "MuteOnHoliday 节假日是否静音",
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "shared_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.ScheduleItem": {
+            "type": "object",
+            "properties": {
+                "end_time": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "time_period": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.User": {
+            "type": "object",
+            "properties": {
+                "avatar_url": {
+                    "type": "string"
+                },
+                "devices": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Device"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "mobile": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "open_id": {
+                    "description": "微信相关信息",
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "yun_approved": {
+                    "description": "云盘相关",
+                    "type": "boolean"
+                },
+                "yun_enable_status": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "model.Vocabulary": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "explanations": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lang_type": {
+                    "type": "string"
+                },
+                "pronunciation": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "word": {
+                    "type": "string"
+                }
+            }
+        },
+        "utils.DictionaryEntry": {
+            "type": "object",
+            "properties": {
+                "chineseCharaterEntities": {},
+                "chineseWordEntities": {},
+                "code": {
+                    "type": "integer"
+                },
+                "englishDictEntities": {},
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "yidong.YidongLoginRes": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "description": "认证页面链接",
+                    "type": "string"
+                },
+                "uuid": {
+                    "description": "用户授权后，须携带此参数访问回调地址",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

@@ -49,6 +49,7 @@
     .opblock-summary-method
     {
         background: $color;
+        color: $color;
     }
 
     .opblock-summary
@@ -59,6 +60,15 @@
     .tab-header .tab-item.active h4 span:after
     {
         background: $color;
+    }
+}
+
+@mixin methodFont($color)
+{
+    .opblock-summary-method
+    {
+      
+        color: $color;
     }
 }
 
@@ -305,6 +315,8 @@
     {
         font-size: 14px;
         font-weight: bold;
+        border: 1px solid #000;
+        border-color: rgba(73, 204, 144, .102);
         @media (max-width: 768px) {
           font-size: 12px;
         }
@@ -317,8 +329,9 @@
         border-radius: 3px;
         background: $opblock-summary-method-background-color;
         text-shadow: 0 1px 0 rgba($opblock-summary-method-text-shadow-color,.1);
+        
 
-        @include text_headline($opblock-summary-method-font-color);
+        // @include text_headline($opblock-summary-method-font-color);
     }
 
     .opblock-summary-path,
@@ -426,31 +439,39 @@
         }
     }
 
-
+    // $_color-post-font: #49cc90 !default;
+    // $_color-get-font: #61affe !default;
+    // $_color-put-font: #fca130 !default;
+    // $_color-delete-font: #f93e3e !default;
 
     &.opblock-post
     {
         @include method($_color-post);
+        @include methodFont($_color-post-font);
     }
 
     &.opblock-put
     {
         @include method($_color-put);
+        @include methodFont($_color-put-font);
     }
 
     &.opblock-delete
     {
         @include method($_color-delete);
+        @include methodFont($_color-delete-font);
     }
 
     &.opblock-get
     {
         @include method($_color-get);
+        @include methodFont($_color-get-font);
     }
 
     &.opblock-patch
     {
         @include method($_color-patch);
+        @include methodFont($_color-patch-font);
     }
 
     &.opblock-head

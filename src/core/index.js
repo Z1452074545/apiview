@@ -47,6 +47,17 @@ import {
 function SwaggerUI(userOptions) {
   const queryOptions = optionsFromQuery()(userOptions)
   const runtimeOptions = optionsFromRuntime()()
+
+// 获取 URL 参数中的 openapi 参数
+const urlParams = new URLSearchParams(window.location.search)
+const openApiUrl = urlParams.get('openapi')
+
+
+// 如果存在 openApi 参数，则将其加入 userOptions
+  if (openApiUrl) {
+    userOptions.url = openApiUrl
+  }
+
   const mergedOptions = SwaggerUI.config.merge(
     {},
     SwaggerUI.config.defaults,

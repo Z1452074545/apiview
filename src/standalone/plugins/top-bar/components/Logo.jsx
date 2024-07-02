@@ -2,7 +2,9 @@
  * @prettier
  */
 import React from "react"
-import SwaggerUILogo from "../assets/logo_small.svg"
+//替换logo
+// import SwaggerUILogo from "../assets/logo_small.svg"
+import SwaggerUILogo from "../assets/aiple_logo_for_apiview.svg"
 
 const Logo = () => <SwaggerUILogo height="40" />
 
